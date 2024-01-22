@@ -1,0 +1,21 @@
+services:
+  api:
+    build: .
+    environment:
+      FLASK_DEBUG: 1
+      DB_HOST: "db"
+    ports:
+      - 8888:8888
+    volumes:
+      - '.:/root'
+    depends_on:
+      - "db"
+  db:
+    image: postgres
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
